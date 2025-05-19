@@ -176,7 +176,7 @@ ylim([0,1e-2]);
 yticks([0,1e-2])
 yticklabels({'$0$','$10^{-2}$'})
 set(gca,'FontSize',4)
-ylabel({'P2 driving force, ($c_1-c_2$)'},'Interpreter','latex','FontSize',FontSize);
+ylabel({'C driving force, ($c_1-c_2$)'},'Interpreter','latex','FontSize',FontSize);
 
 text(letter_offsets(1),1.14,'\textbf{D}','Interpreter','latex','Units','normalized','FontSize',4)
 

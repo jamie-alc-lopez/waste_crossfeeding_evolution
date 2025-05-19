@@ -160,14 +160,14 @@ ext_c_color = [86 180 233]/255;
 rho_colors = [68 170 153; 136 34 85]/255;
 dmat = [2 0 2 0; 1 1 1 1; 1/4 1/4 1/4 1/4];
 
-c1_vec = sr.extra_c_cell{1}(:,stripe_ind);
-c2_vec = sr.extra_c_cell{2}(:,stripe_ind);
-c3_vec = sr.extra_c_cell{3}(:,stripe_ind);
+c1_vec = sr.extra_c_cell{1}(stripe_ind,:);
+c2_vec = sr.extra_c_cell{2}(stripe_ind,:);
+c3_vec = sr.extra_c_cell{3}(stripe_ind,:);
 
-P1_vec = sr.P1_mat(:,stripe_ind);
-P2_vec = sr.P2_mat(:,stripe_ind);
+P1_vec = sr.P1_mat(stripe_ind,:);
+P2_vec = sr.P2_mat(stripe_ind,:);
 
-D_vec = flip(sr.D_range);
+D_vec = sr.D_mat(stripe_ind,:);
 
 %External concentrations
 axes(Fig2ax(4));
@@ -184,9 +184,9 @@ set(gca,'XScale','log')
 xticks([D_range(1),D_range(2)]);
 xlim([D_range(1),D_range(2)]);
 xticklabels({'$-6$','$-3$'})
-ylim([1e-3,1e-1])
-yticks([1e-3,1e-2,1e-1]);
-yticklabels({'$10^{-3}$','$10^{-2}$','$10^{-1}$'})
+ylim([1e-4,1e-1])
+yticks([1e-4,1e-3,1e-2,1e-1]);
+yticklabels({'$10^{-4}$','$10^{-3}$','$10^{-2}$','$10^{-1}$'})
 set(gca,'TickLabelInterpreter','latex')
 
 leg_top = 1e-1;
@@ -199,7 +199,7 @@ for k = 1:length(leg_labels_c)
     dashline([leg_left,leg_left + line_length],[curr_y,curr_y],...
         dmat(k,1),dmat(k,2),dmat(k,3),dmat(k,4),'Color',ext_c_color)
     text(leg_left + line_length + spacing_x,curr_y,leg_labels_c{k},'Interpreter','latex','FontSize',4)
-    curr_y = curr_y*0.65;
+    curr_y = curr_y*0.6;
 end
 
 
@@ -216,19 +216,19 @@ set(gca,'XScale','log')
 xticks([D_range(1),D_range(2)]);
 xlim([D_range(1),D_range(2)]);
 xticklabels({'$-6$','$-3$'})
-yticks([1e9,1e13])
-ylim([10^(9),1e13]);
-yticklabels({'$10^{9}$','$10^{13}$'})
+yticks([1e9,1e10,1e11])
+ylim([1e9,1e11]);
+yticklabels({'$10^{9}$','$10^{10}$','$10^{11}$'})
 set(gca,'YScale','log')
 set(gca,'TickLabelInterpreter','latex')
 
-leg_top = 1e13;
+leg_top = 1e11;
 leg_left = 0.5e-4;
 mylines = {'-','-','-'};
 leg_labels_rho = {'P1','P2'};
 line_length = 15e-5;
 spacing_x = 0.5e-4;
-spacing_y = 7e-2*1e14;
+spacing_y = 4e-2*1e12;
 curr_y = leg_top;
 for k = 1:length(leg_labels_rho)
     plot([leg_left,leg_left + line_length],[curr_y,curr_y],mylines{k},'Color',colors(k+1,:))

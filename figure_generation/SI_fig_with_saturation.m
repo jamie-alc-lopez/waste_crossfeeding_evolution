@@ -38,7 +38,7 @@ end
 
 clear;clc
 
-highlighted_S = 3.1079e-07;
+highlighted_S = 3.01e-07;
 
 newfigure(3.42/2, (3/3)*3.42/2);
 gap = [0.2,0.15]; %height, width
@@ -153,24 +153,25 @@ text(point4(1) + point_offset,point4(2),'P1+P2',...
 
 load('fig_data/no_osm_sweep_Keq_1_sat_simulation_results.mat');
 
-stripe_ind = 100;
+stripe_ind = 70;
 
 ext_c_colors = [86 180 233]/255;
 rho_colors = [68 170 153; 136 34 85]/255;
 dmat = [2 0 2 0; 1 1 1 1; 1/4 1/4 1/4 1/4];
 
-c1_vec = sr.extra_c_cell{1}(:,stripe_ind);
-c2_vec = sr.extra_c_cell{2}(:,stripe_ind);
-c3_vec = sr.extra_c_cell{3}(:,stripe_ind);
+c1_vec = sr.extra_c_cell{1}(stripe_ind,:);
+c2_vec = sr.extra_c_cell{2}(stripe_ind,:);
+c3_vec = sr.extra_c_cell{3}(stripe_ind,:);
 
-P1_vec = sr.P1_mat(:,stripe_ind);
-P2_vec = sr.P2_mat(:,stripe_ind);
+P1_vec = sr.P1_mat(stripe_ind,:);
+P2_vec = sr.P2_mat(stripe_ind,:);
 
-D_vec = flip(sr.D_range);
+D_vec = sr.D_mat(stripe_ind,:);
 
 %External concentrations
 axes(SIFigax(4));
 hold on
+set(gca,'YScale','log')
 dashline(D_vec,c1_vec,dmat(1,1),dmat(1,2),dmat(1,3),dmat(1,4),'Color',ext_c_colors)
 dashline(D_vec,c2_vec,dmat(2,1),dmat(2,2),dmat(2,3),dmat(2,4),'Color',ext_c_colors)
 dashline(D_vec,c3_vec,dmat(3,1),dmat(3,2),dmat(3,3),dmat(3,4),'Color',ext_c_colors)
@@ -182,12 +183,12 @@ set(gca,'XScale','log')
 xticks([D_range(1),D_range(2)]);
 xlim([D_range(1),D_range(2)]);
 xticklabels({'$-6$','$-3$'})
-yticks([0,3e-2])
-ylim([0,3e-2]);
-yticklabels({'0','$3 \times 10^{-2}$'})
+yticks([1e-4,1e-2,1e0])
+ylim([1e-4,1e0]);
+yticklabels({'$10^{-4}$','$10^{-2}$','$10^{0}$'})
 set(gca,'TickLabelInterpreter','latex')
 
-leg_top = 3e-2;
+leg_top = 3e-1;
 leg_left = 0.5e-4;
 leg_labels_c = {'$c_{0,e}$','$c_{1,e}$','$c_{2,e}$'};
 line_length = 15e-5;
@@ -197,13 +198,13 @@ for k = 1:length(leg_labels_c)
     dashline([leg_left,leg_left + line_length],[curr_y,curr_y],...
         dmat(k,1),dmat(k,2),dmat(k,3),dmat(k,4),'Color',ext_c_colors)
     text(leg_left + line_length + spacing_x,curr_y,leg_labels_c{k},'Interpreter','latex','FontSize',4)
-    curr_y = curr_y-0.3e-2;
+    curr_y = curr_y*0.5e0;
 end
 
-yhandle = get(gca,'YLabel');
-pos = yhandle.Position;
-pos(1) = 0.6e-6;
-set(yhandle,'Position',pos);
+%yhandle = get(gca,'YLabel');
+%pos = yhandle.Position;
+%pos(1) = 0.6e-6;
+%set(yhandle,'Position',pos);
 
 
 %Population densities
@@ -219,19 +220,19 @@ set(gca,'XScale','log')
 xticks([D_range(1),D_range(2)]);
 xlim([D_range(1),D_range(2)]);
 xticklabels({'$-6$','$-3$'})
-yticks([1e10,1e13])
-ylim([10^(10),1e13]);
-yticklabels({'$10^{10}$','$10^{13}$'})
+yticks([1e9,1e10,1e11])
+ylim([10^(9),1e11]);
+yticklabels({'$10^{9}$','$10^{10}$','$10^{11}$'})
 set(gca,'YScale','log')
 set(gca,'TickLabelInterpreter','latex')
 
-leg_top = 1e13;
+leg_top = 0.9e11;
 leg_left = 0.5e-4;
 mylines = {'-','-','-'};
 leg_labels_rho = {'P1','P2'};
 line_length = 15e-5;
 spacing_x = 0.5e-4;
-spacing_y = 6e-2*1e14;
+spacing_y = 4e-2*1e12;
 curr_y = leg_top;
 for k = 1:length(leg_labels_rho)
     plot([leg_left,leg_left + line_length],[curr_y,curr_y],mylines{k},'Color',colors(k+1,:))
