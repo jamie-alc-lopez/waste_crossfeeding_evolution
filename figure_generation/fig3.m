@@ -12,9 +12,12 @@ par_tables{2} = parameter_table(parameter_table.Keq_1 == 10,:);
 %Reformat data
 for k = 1:length(par_tables)
 
+    %Extract the c0
     for i = 1:size(par_tables{k},1)
         par_tables{k}.min_c0(i) = par_tables{k}.simu{i}.c(end,1);
     end
+
+    %Process into x and y vecs for plotting
     only_P1P2_ind{k} = par_tables{k}.only_P1P2 == 1;
     only_P1C_ind{k} = par_tables{k}.only_P1C == 1;
     consortium_ind{k} = cellfun(@(x) size(x,1),par_tables{k}.strains);
